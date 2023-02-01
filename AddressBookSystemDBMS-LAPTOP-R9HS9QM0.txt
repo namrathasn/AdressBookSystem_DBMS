@@ -1,0 +1,201 @@
+************Welcome to Address Book System************
+
+UC1:Ability to create a Address Book Service DB.
+Solution:
+	//Create a database using 'CREATE'command like:address_book_system.
+	 CREATE DATABASE address_book_system;
+	
+	//View a all databases.
+	 SHOW databases;
+	+---------------------+
+	| Database            |
+	+---------------------+
+	| address_book_system |
+	| information_schema  |
+	| mysql               |
+	| payroll_service     |
+	| performance_schema  |
+	| sakila              |
+	| sys                 |
+	| world               |
+	+---------------------
+
+	//Use particular database using 'USE' command. 
+         USE address_book_system;                     #Database changed
+	
+	//View database.
+	 SELECT DATABASE();
+	+---------------------+
+	| DATABASE()          |
+	+---------------------+
+	| address_book_system |
+	+---------------------+
+
+UC2:Create a Address Book Table with first and last names, address, city, state, zip, phone number and email as its attributes.
+Solution:
+
+       //Create a table using 'CREATE' command.
+	mysql> CREATE TABLE address_book
+    	-> (
+    	-> id               INT unsigned NOT NULL AUTO_INCREMENT,	#Unique ID for the record.
+    	-> first_name       VARCHAR(50) NOT NULL,			#First Names of Address Book.
+    	-> last_name        VARCHAR(50),				#Last Names of Address Book.
+    	-> address          VARCHAR(150) NOT NULL,			#Address of Address Book.
+    	-> city             VARCHAR(30) NOT NULL,			#City of Address Book.
+    	-> state            VARCHAR(30) NOT NULL,			#State of Address Book.
+    	-> zip              INT(6) NOT NULL,				#Zip of Address Book.
+    	-> phone_number     INT(13) NOT NULL,				#Phone number of Addess Book.
+    	-> email            VARCHAR(50) NOT NULL,			#Email of Address Book.
+    	-> PRIMARY KEY(id)						#Make id primary key.
+    	-> );
+	Query OK, 0 rows affected, 2 warnings (1.25 sec)
+
+	//View the table using 'DESCRIBE'command.
+	mysql> DESCRIBE address_book;
+	+--------------+--------------+------+-----+---------+----------------+
+	| Field        | Type         | Null | Key | Default | Extra          |
+	+--------------+--------------+------+-----+---------+----------------+
+	| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
+	| first_name   | varchar(50)  | NO   |     | NULL    |                |
+	| last_name    | varchar(50)  | YES  |     | NULL    |                |
+	| address      | varchar(150) | NO   |     | NULL    |                |
+	| city         | varchar(30)  | NO   |     | NULL    |                |
+	| state        | varchar(30)  | NO   |     | NULL    |                |
+	| zip          | int          | NO   |     | NULL    |                |
+	| phone_number | int          | NO   |     | NULL    |                |
+	| email        | varchar(50)  | NO   |     | NULL    |                |
+	+--------------+--------------+------+-----+---------+----------------+
+	9 rows in set (0.03 sec)
+
+UC3:Ability to insert new Contacts to Address Book.
+Solution:
+	//Insert a data into table using 'INSERT' command.
+	INSERT INTO address_book(first_name, last_name, address, city , state , zip , phone_number, email) VALUES
+	('Rekha','Patil','GKW Layout', 'Bangalore', 'Kar',560058, 8095592954, 'patilrekha.1206@gmail.com'),
+	('Rahmi','Patil','RajajiNagar','Bangalore','Kar', 560057,9716277712,'rashmi123@gmail.com'),
+    	('Riya','Patil','Peenya','Bngalore', 'Kar', 560059,983734421,'riya15@gmail.com'),
+    	('Ramya','Patil','Peenya','Bangalore','kar',560059,8764727523,'ramya12@gmail.com');
+	Query OK, 4 rows affected (0.15 sec)
+	Records: 4  Duplicates: 0  Warnings: 0
+
+	//View a table in a table.
+	mysql> SELECT * FROM address_book;
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	| id | first_name | last_name | address        | city         | state         | zip    | phone_number | email                   |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	|  1 | Rekha      | Patil     | GKW Layout     | Bangalore    | Kar           | 560058 |   8095592954 |patilrekha.1206@gmail.com|
+	|  2 | Rahmi      | Patil     | RajajiNagar    | Bangalore    | Kar           | 560057 |   9716277712 | rashmi123@gmail.com     |
+	|  3 | Riya       | Patil     | Peenya         | Bangalore    | Kar           | 560059 |   983734421  | riya15@gmail.com        |
+	|  5 | Ramya      | Patil     |Peenya          | Bangalore    | Kar           | 560059 |   8764727523 | ramya12@gmail.com       |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	4 rows in set (0.00 sec)
+
+UC4 // Update one of the data from the table.
+
+mysql> UPDATE address_book set city = 'Gorakhpur' WHERE first_name = 'Malvika';			# It is use to update the data from the table using where clause.
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM address_book;								# Retrive the data from the table.
+        +----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	| id | first_name | last_name | address        | city         | state         | zip    | phone_number | email                   |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	|  1 | Rekha      | Patil     | GKW Layout     | Bangalore    | Kar           | 560058 |   8095592954 |patilrekha.1206@gmail.com|
+	|  2 | Rahmi      | Patil     | RajajiNagar    | Bangalore    | Kar           | 560057 |   9716277712 | rashmi123@gmail.com     |
+	|  3 | Riya       | Patil     | Peenya         | Mangalore    | Kar           | 560059 |   983734421  | riya15@gmail.com        |
+	|  5 | Ramya      | Patil     |Peenya          | Bangalore    | Kar           | 560059 |   8764727523 | ramya12@gmail.com       |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	4 rows in set (0.00 sec)
+
+UC5: Ability to delete a person using person's name.
+// Delete the entry of the person 
+
+mysql> DELETE from address_book WHERE first_name = 'Ramya';				# Deleted the data where name is Ramya
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT * FROM address_book;							# Retrive the data from the table .
+        +----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	| id | first_name | last_name | address        | city         | state         | zip    | phone_number | email                   |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	|  1 | Rekha      | Patil     | GKW Layout     | Bangalore    | Kar           | 560058 |   8095592954 |patilrekha.1206@gmail.com|
+	|  2 | Rahmi      | Patil     | RajajiNagar    | Bangalore    | Kar           | 560057 |   9716277712 | rashmi123@gmail.com     |
+	|  3 | Riya       | Patil     | Peenya         | Mangalore    | Kar           | 560059 |   983734421  | riya15@gmail.com        |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	4 rows in set (0.00 sec)
+UC6 //Retrive person belonging to specific city or state
+
+mysql> SELECT * FROM address_book WHERE city="Bangalore" AND state="Kar";			# Retrive the data according to state and city
+
+        +----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	| id | first_name | last_name | address        | city         | state         | zip    | phone_number | email                   |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	|  1 | Rekha      | Patil     | GKW Layout     | Bangalore    | Kar           | 560058 |   8095592954 |patilrekha.1206@gmail.com|
+	|  2 | Rahmi      | Patil     | RajajiNagar    | Bangalore    | Kar           | 560057 |   9716277712 | rashmi123@gmail.com     |        |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+
+	4 rows in set (0.00 sec)
+
+UC7 Ability to understand the size of address book by City and State
+//Count the city and state
+
+mysql> SELECT state, COUNT(first_name) FROM address_book GROUP BY state;		#To count the state
++-------+-------------------+
+| state | COUNT(first_name) |
++-------+-------------------+
+| Kar   |                 3 |
++-------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT city, COUNT(first_name) FROM address_book GROUP BY city;			#To count the city
++-----------+-------------------+
+| city      | COUNT(first_name) |
++-----------+-------------------+
+| Bangalore |                 2 |
+| Mangalore |                 1 |
++-----------+-------------------+
+2 rows in set (0.00 sec)
+
+UC8 // Retrive data in ascending order
+
+mysql> SELECT * FROM address_book WHERE city="Bangalore"  ORDER BY first_name ASC;	#To retive data in ascending order
+        +----+------------+-----------+----------------+--------------+---------------+--------+--------------+--------------------------+
+	| id | first_name | last_name | address        | city         | state         | zip    | phone_number | email                    |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+--------------------------+
+	|  1 | Rahmi      | Patil     | RajajiNagar    | Bangalore    | Kar           | 560057 |   9716277712 |rashmi123@gmail.com       |
+	|  2 | Rekha      | Patil     | GKW Layout     | Bangalore    | Kar           | 560058 |   8095592954 | patilrekha.1206@gmail.com|        
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+--------------------------+
+	4 rows in set (0.00 sec)
+UC9 // ALTER table add cloumn type
+
+mysql> alter table address_book add addressbook_type varchar(50);	# Alter is use to add one feild name as type.
+# Updating the table by adding the value into the type feild using name.
+mysql> UPDATE address_book SET addressbook_type="family" WHERE first_name="Rahmi"; 
+mysql> UPDATE address_book SET addressbook_type="family" WHERE first_name="Rekha";
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE address_book SET addressbook_type="friend" WHERE first_name="Riya";
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+# To display the table.	
+mysql> select * from address_book;						 
+        +----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+------------------+
+	| id | first_name | last_name | address        | city         | state         | zip    | phone_number | email                   | addressbook_type |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+------------------+
+	|  1 | Rekha      | Patil     | GKW Layout     | Bangalore    | Kar           | 560058 |   8095592954 |patilrekha.1206@gmail.com| family           |
+	|  2 | Rahmi      | Patil     | RajajiNagar    | Bangalore    | Kar           | 560057 |   9716277712 | rashmi123@gmail.com     | family           |
+	|  3 | Riya       | Patil     | Peenya         | Mangalore    | Kar           | 560059 |   983734421  | riya15@gmail.com        | friend           |
+	+----+------------+-----------+----------------+--------------+---------------+--------+--------------+-------------------------+------------------+
+	4 rows in set (0.00 sec)
+	
+UC10 // COUNT by type
+# Here i use count to count the each type using group by clause.
+mysql> SELECT first_name,type,COUNT(type) FROM address_book GROUP BY first_name;		
+
++------------+------------+-------------+
+| first_name | type       | COUNT(type) |
++------------+------------+-------------+
+| Rekha      | family     |           1 |
+| Rahmi      | family     |           1 |
+| Riya       | friend     |           1 |
++------------+------------+-------------+
+3 rows in set (0.00 sec)
